@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from profiles.models import Profile
 from django.http import JsonResponse
 from .utils import get_report_image
@@ -41,19 +41,23 @@ def create_report_view(request):
     return JsonResponse({})
 
 
-def render_pdf_view(request):
-    template_path = 'user_printer.html'
-    context = {'myvar': 'this is your template context'}
+def render_pdf_view(request, pk):
+    template_path = 'reports/pdf.html'
+    obj = get_object_or_404(Report, pk=pk)
+    context = {'obj': obj}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    #if download
+    #response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+    #if display
+    response['Content-Disposition'] = 'filename="report.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render(context)
 
     # create a pdf
     pisa_status = pisa.CreatePDF(
-       html, dest=response, link_callback=link_callback)
+       html, dest=response)
     # if error then show some funny view
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
