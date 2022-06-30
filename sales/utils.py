@@ -26,6 +26,7 @@ def get_graph():
     graph = graph.decode('utf-8')
     buffer.close()
     return graph
+    
 def get_key(res_by):
     if res_by == '#1':
         key = 'transaction_id'
