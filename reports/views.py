@@ -15,7 +15,7 @@ from sales.models import Sale, Position, CSV
 from products.models import Product
 from customers.models import Customer
 import csv
-from django.utls.dateparse import parse_date
+from django.utils.dateparse import parse_date
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -74,7 +74,7 @@ def csv_upload_view(request):
                         sale_obj.save()
                 return JsonResponse({'ex': False})
         else:
-            return JsonResponse({'ex':n True})
+            return JsonResponse({'ex': True})
 
     return HttpResponse()
 
