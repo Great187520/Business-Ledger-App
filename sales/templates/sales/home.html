@@ -23,7 +23,7 @@ Home
         </div>
         <div class="modal-body" id="modal-body">
             <div id="alert-box"></div>
-          <form id="report_form">
+          <form id="report_form" autocomplete="off">
               {% csrf_token %}
               {{report_form|crispy}}
               <br>
